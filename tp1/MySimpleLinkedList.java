@@ -2,7 +2,7 @@ package tp1;
 
 import java.util.Iterator;
 
-public class MySimpleLinkedList<T> implements Iterable<T>{
+public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T>{
 
     protected Node<T> first;
 
@@ -47,7 +47,7 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
         Node<T> aux = this.first;
         int pos = 0;
 
-        while ((aux != null) && (aux.getNext() != null)) {
+        while (aux != null) {
             if (aux.getInfo() == info) {
                 return pos;
             }
@@ -81,9 +81,65 @@ public class MySimpleLinkedList<T> implements Iterable<T>{
         return res;
     }
 
+    public void insertarOrdenado(T info) {
+
+    }
+
     @Override
-    public Iterator<T> iterator() {
+    public MySimpleLinkedListIterator<T> iterator() {
         MySimpleLinkedListIterator<T> it = new MySimpleLinkedListIterator<>(this.first);
         return it;
+    }
+
+    public MySimpleLinkedList ordenarListas(MySimpleLinkedList l){
+        MySimpleLinkedListIterator<T>it1=new MySimpleLinkedListIterator<>(this.first); //Podria ser this.iterator()
+        MySimpleLinkedListIterator<T>it2=new MySimpleLinkedListIterator<>(l.first);
+
+        MySimpleLinkedList lista=new MySimpleLinkedList();
+        while(it1.hasNext() && it2.hasNext()){
+            if (-1 == it1.getInfo().compareTo(it2.getInfo())){
+                it1.next();
+            }
+            if (1 == it1.getInfo().compareTo(it2.getInfo())){
+                it2.next();
+            }
+            if (0==it1.getInfo().compareTo(it2.getInfo())){
+                lista.insertSorted(it1.getInfo());
+                it1.next();
+                it2.next();
+            }
+        }
+        return lista;
+    }
+
+    public MySimpleLinkedList<T> getDiferenciaListas(MySimpleLinkedList<T> l2){
+        MySimpleLinkedListIterator<T> it1 = this.iterator();
+        MySimpleLinkedList<T> resultList = new MySimpleLinkedList<>();
+
+        while (it1.hasNext()){
+            MySimpleLinkedListIterator<T> it2 = l2.iterator();
+            boolean found = false;
+            while (it2.hasNext() && !found){
+                if (it1.getInfo().compareTo(it2.getInfo()) != 0){
+                    resultList.insertFront(it1.getInfo());
+                    found = true;
+                }
+                it2.next();
+            }
+            it1.next();
+        }
+
+        return resultList;
+    }
+
+
+    public void insertSorted(T info){
+        Node<T>aux=this.first;
+
+        while(aux!=null){
+            if(-1==info.compareTo(aux.getInfo())){
+
+            }
+        }
     }
 }

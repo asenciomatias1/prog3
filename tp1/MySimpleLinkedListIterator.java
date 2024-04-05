@@ -27,6 +27,10 @@ public class MySimpleLinkedListIterator<T> implements Iterator<T> {
         return null;
     }
 
+    public T getInfo(){
+        return currentNode.getInfo();
+    }
+
     public int getContador() {
         return this.contador;
     }
